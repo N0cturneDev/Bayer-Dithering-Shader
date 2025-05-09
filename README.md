@@ -1,4 +1,3 @@
-<<<<<<< ours
 # Bayer-Dithering-Shader
 
 This Godot shader applies a dithering effect to a texture using Bayer matrix dithering. Download `bayer_mat_dither.gdshader` and add the shader to your material. You can also download the project files here to test out the shader.
@@ -58,6 +57,3 @@ Point Dithering applies a dithering effect to a single point and extends outward
 ## Crediting
 
 You are free to use this shader for commercial and non-commercial projects. Please attribute credit to n0cture or N0cturneDev. Links to the repository are appreciated.
-=======
-# Bayer-Dithering-Shader
->>>>>>> theirs
