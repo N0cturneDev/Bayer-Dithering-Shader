@@ -1,0 +1,183 @@
+[gd_scene load_steps=6 format=3 uid="uid://1b8wmf5qhqge"]
+
+[ext_resource type="Script" uid="uid://bqfrs7xrbms88" path="res://test_scene.gd" id="1_coq8p"]
+[ext_resource type="Shader" uid="uid://6d2kmhft50j8" path="res://bayer_mat_dither.gdshader" id="1_sasra"]
+[ext_resource type="Texture2D" uid="uid://xjaw1vc4b7tl" path="res://icon.svg" id="2_coq8p"]
+[ext_resource type="Script" uid="uid://beljtnbcdrm1e" path="res://dither.gd" id="3_2nij2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7cbxl"]
+shader = ExtResource("1_sasra")
+shader_parameter/dither_type = 1
+shader_parameter/invert = false
+shader_parameter/matrix_size = 2
+shader_parameter/debug = false
+shader_parameter/flat_dither_level = 0.5
+shader_parameter/gradient_point_opaque = Vector2(0, 0)
+shader_parameter/gradient_point_trans = Vector2(0, 0)
+shader_parameter/dither_point = Vector2(0, 0)
+shader_parameter/dither_point_radius = 16.0
+
+[node name="TestScene" type="Node2D" node_paths=PackedStringArray("uis")]
+script = ExtResource("1_coq8p")
+uis = [NodePath("Flat UI"), NodePath("Gradient UI"), NodePath("Point UI")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." node_paths=PackedStringArray("gradient_point_trans", "gradient_point_opaque", "invert_box", "debug_box", "flat_slider")]
+material = SubResource("ShaderMaterial_7cbxl")
+position = Vector2(64, 64)
+texture = ExtResource("2_coq8p")
+script = ExtResource("3_2nij2")
+dither_type = 0
+gradient_point_trans = NodePath("../Gradient UI/Gradient Point Trans")
+gradient_point_opaque = NodePath("../Gradient UI/Gradient Point Opaque")
+invert_box = NodePath("../CheckBox")
+debug_box = NodePath("../CheckBox2")
+flat_slider = NodePath("../Flat UI/HSlider")
+
+[node name="2x2" type="Button" parent="."]
+offset_left = 16.0
+offset_top = 144.0
+offset_right = 48.0
+offset_bottom = 169.0
+theme_override_font_sizes/font_size = 12
+text = "2x2"
+
+[node name="4x4" type="Button" parent="."]
+offset_left = 16.0
+offset_top = 176.0
+offset_right = 48.0
+offset_bottom = 201.0
+theme_override_font_sizes/font_size = 12
+text = "4x4"
+
+[node name="8x8" type="Button" parent="."]
+offset_left = 16.0
+offset_top = 208.0
+offset_right = 48.0
+offset_bottom = 233.0
+theme_override_font_sizes/font_size = 12
+text = "8x8"
+
+[node name="ItemList" type="ItemList" parent="."]
+offset_left = 144.0
+offset_top = 16.0
+offset_right = 240.0
+offset_bottom = 84.0
+theme_override_font_sizes/font_size = 11
+item_count = 3
+item_0/text = "Flat"
+item_1/text = "Gradient"
+item_2/text = "Point"
+
+[node name="Flat UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HSlider" type="HSlider" parent="Flat UI"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 128.0
+offset_right = 239.0
+offset_bottom = 144.0
+max_value = 1.0
+step = 0.001
+value = 0.5
+
+[node name="Label" type="Label" parent="Flat UI/HSlider"]
+layout_mode = 0
+offset_top = -32.0
+offset_right = 94.0
+offset_bottom = -9.0
+text = "Dither Level"
+
+[node name="Gradient UI" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Gradient Point Trans" type="Node2D" parent="Gradient UI"]
+position = Vector2(48, 32)
+
+[node name="Gradient Point Opaque" type="Node2D" parent="Gradient UI"]
+position = Vector2(96, 96)
+
+[node name="Label" type="Label" parent="Gradient UI"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 96.0
+offset_right = 250.0
+offset_bottom = 119.0
+theme_override_font_sizes/font_size = 10
+text = "Left Mouse- Move 
+Transparent end
+Right Mouse- Move 
+Opaque end"
+
+[node name="Point UI" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SpinBox" type="SpinBox" parent="Point UI"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 128.0
+offset_right = 230.563
+offset_bottom = 159.0
+value = 16.0
+
+[node name="Label" type="Label" parent="Point UI/SpinBox"]
+layout_mode = 0
+offset_top = -32.0
+offset_right = 97.0
+offset_bottom = -9.0
+text = "Point Radius"
+
+[node name="CheckBox" type="CheckBox" parent="."]
+offset_left = 128.0
+offset_top = 176.0
+offset_right = 152.0
+offset_bottom = 200.0
+
+[node name="Label" type="Label" parent="CheckBox"]
+layout_mode = 0
+offset_left = 32.0
+offset_right = 79.0
+offset_bottom = 23.0
+text = "Invert (I)"
+
+[node name="CheckBox2" type="CheckBox" parent="."]
+offset_left = 128.0
+offset_top = 208.0
+offset_right = 152.0
+offset_bottom = 232.0
+
+[node name="Label" type="Label" parent="CheckBox2"]
+layout_mode = 0
+offset_left = 32.0
+offset_right = 79.0
+offset_bottom = 23.0
+text = "Debug (D)"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 54.0
+offset_top = 148.0
+offset_right = 124.0
+offset_bottom = 164.0
+theme_override_font_sizes/font_size = 10
+text = "Press 2, 4, or 8"
+
+[connection signal="button_down" from="2x2" to="Sprite2D" method="_on_x_2_button_down"]
+[connection signal="button_down" from="4x4" to="Sprite2D" method="_on_x_4_button_down"]
+[connection signal="button_down" from="8x8" to="Sprite2D" method="_on_x_8_button_down"]
+[connection signal="item_selected" from="ItemList" to="." method="_on_item_list_item_selected"]
+[connection signal="item_selected" from="ItemList" to="Sprite2D" method="_on_item_list_item_selected"]
+[connection signal="value_changed" from="Flat UI/HSlider" to="Sprite2D" method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="Point UI/SpinBox" to="Sprite2D" method="_on_spin_box_value_changed"]
+[connection signal="toggled" from="CheckBox" to="Sprite2D" method="_on_check_box_toggled"]
+[connection signal="toggled" from="CheckBox2" to="Sprite2D" method="_on_check_box_2_toggled"]
